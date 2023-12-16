@@ -8,13 +8,15 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
   @Get('/all')
-  findAll() {
-    return [];
+  findAll(@Query() queries) {
+    const { offset, limit } = queries;
+    return { offset, limit };
   }
 
   @Get(':id')
