@@ -30,7 +30,6 @@ export class CoffeesService {
 
       return c;
     });
-    console.log(this.coffees);
   }
 
   delete(id: number) {
