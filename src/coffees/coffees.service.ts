@@ -31,7 +31,7 @@ export class CoffeesService {
   }
 
   create(coffee: CreateCoffeeDto) {
-    this.coffees = [{ id: uuidv4(), ...coffee }, ...this.coffees];
+    this.coffees = [{ ...coffee, id: uuidv4() }, ...this.coffees];
   }
 
   update(id: string, coffee: Coffee) {
