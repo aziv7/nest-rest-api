@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from 'src/entities/coffee.entity';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 
 @Injectable()
 export class CoffeesService {
@@ -31,12 +32,14 @@ export class CoffeesService {
   }
 
   create(coffee: CreateCoffeeDto) {
-    this.coffees = [{ ...coffee, id: uuidv4() }, ...this.coffees];
+    const { name, brand, flavors } = coffee;
+    this.coffees = [{ name, brand, flavors, id: uuidv4() }, ...this.coffees];
   }
 
-  update(id: string, coffee: Coffee) {
+  update(id: string, coffee: UpdateCoffeeDto) {
+    const { name, brand, flavors } = coffee;
     this.coffees = this.coffees.map((c: Coffee) => {
-      if (c.id === id) return { ...c, ...coffee };
+      if (c.id === id) return { ...c, name, brand, flavors };
 
       return c;
     });
