@@ -39,7 +39,13 @@ export class CoffeesService {
   update(id: string, coffee: UpdateCoffeeDto) {
     const { name, brand, flavors } = coffee;
     this.coffees = this.coffees.map((c: Coffee) => {
-      if (c.id === id) return { ...c, name, brand, flavors };
+      if (c.id === id)
+        return {
+          ...c,
+          name: name ? name : c.name,
+          brand: brand ? brand : c.brand,
+          flavors: flavors ? flavors : c.flavors,
+        };
 
       return c;
     });
