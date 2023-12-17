@@ -11,6 +11,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -23,23 +24,23 @@ export class CoffeesController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: number) {
-    return this.coffeesService.findById(+id);
+  findById(@Param('id') id: string) {
+    return this.coffeesService.findById(id);
   }
 
   @Post('')
   // @HttpCode(HttpStatus.FOUND)
-  create(@Body() body) {
+  create(@Body() body: CreateCoffeeDto) {
     return this.coffeesService.create(body);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() body) {
-    return this.coffeesService.update(+id, body);
+  update(@Param('id') id: string, @Body() body) {
+    return this.coffeesService.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.coffeesService.delete(+id);
+  remove(@Param('id') id: string) {
+    return this.coffeesService.delete(id);
   }
 }

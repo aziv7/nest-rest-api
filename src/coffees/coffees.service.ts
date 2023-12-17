@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from 'src/entities/coffee.entity';
+import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class CoffeesService {
   private coffees: Coffee[] = [
     {
-      id: 1,
+      id: uuidv4(),
       name: 'express',
       brand: 'duddy',
       flavors: ['cafeine', 'choclate'],
@@ -16,7 +18,7 @@ export class CoffeesService {
     return this.coffees;
   }
 
-  findById(id: number) {
+  findById(id: string) {
     const found = this.coffees.find((coffee: Coffee) => coffee.id === id);
 
     if (!found)
@@ -28,11 +30,11 @@ export class CoffeesService {
     return found;
   }
 
-  create(coffee: Coffee) {
-    this.coffees = [coffee, ...this.coffees];
+  create(coffee: CreateCoffeeDto) {
+    this.coffees = [{ id: uuidv4(), ...coffee }, ...this.coffees];
   }
 
-  update(id: number, coffee: Coffee) {
+  update(id: string, coffee: Coffee) {
     this.coffees = this.coffees.map((c: Coffee) => {
       if (c.id === id) return { ...c, ...coffee };
 
@@ -40,7 +42,7 @@ export class CoffeesService {
     });
   }
 
-  delete(id: number) {
+  delete(id: string) {
     this.coffees = this.coffees.filter((c: Coffee) => c.id !== id);
   }
 }
